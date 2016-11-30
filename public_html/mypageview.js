@@ -15,22 +15,22 @@
                 vars.divNode.style.color = "#cccccc";
                 if(document.cookie.match("_ns=2")){
                     vars.h3Node.textContent = "この"+vars.domein+"はページビューを追跡していません。"; 
-                    vars.aNode.onclick = function(){myPageView.buttuns.setCookie(2000);return false;}
+                    vars.aNode.onclick = function(){myPageView.buttuns.setCookie(2000);return false;};
                     vars.aNode.textContent = vars.on_msg;
                     vars.divNode.textContent = vars.off_msg;
                     vars.childelems = [vars.h3Node, vars.aNode, vars.divNode];
                 } else {
                     vars.h3Node.textContent = "この"+vars.domein+"はページビューを追跡しています。"; 
-                    vars.aNode.onclick = function(){myPageView.buttuns.setCookie(2030);return false;}
+                    vars.aNode.onclick = function(){myPageView.buttuns.setCookie(2030);return false;};
                     vars.aNode.textContent = vars.off_msg;
                     vars.divNode.textContent = vars.on_msg;
                     vars.childelems = [vars.h3Node, vars.divNode, vars.aNode];                    
                 }
                 if (vars.childelems) {
-                    vars.childelems.forEach(function(n){vars.elem.appendChild(n);})
+                    vars.childelems.forEach(function(n){vars.elem.appendChild(n);});
                 }
             }
-        }  // end of pv
+        };  // end of pv
         var vars ={
             elem: document.getElementById("myPageView"),
             h3Node: document.createElement('h3'),
@@ -40,7 +40,7 @@
             off_msg: "自分のページビューを追跡しないに変更する。",
             divNode: document.createElement('div'),
             childelems: []
-        }
+        };
         return pv;
     }();
     myPageView.all();
