@@ -1,26 +1,46 @@
-var domein=location.hostname;
-var domein_TLD_nashi=domein.slice(0,domein.lastIndexOf(".")+1);
-//if(document.referrer.match("http://"+domein_TLD_nashi)){
- if(navigator.cookieEnabled){
-   if(document.cookie.match("_ns=2")){
-      document.write("<h3"+">この"+domein+"はページビューを追跡していません。</h3"+"><br/>");
-      document.write("<a href=\'javascript:document.cookie=\"_ns=2;expires=Sun, 09 Aug 2000 11:53:58 GMT;domain=."+domein+";path=/;\";location.reload();\'>自分のページビューを追跡に変更する</a><br/>");
-      document.write("<span style=\'color: #cccccc;\'>自分のページビューを追跡しないに変更する。</span><br/>");
-   }else{
-      document.write("<h3"+">この"+domein+"はページビューを追跡しています</h3"+"><br/>");
-      document.write("<span style=\'color: #cccccc;\'>自分のページビューを追跡に変更する</span><br/>");
-      document.write("<a href=\'javascript:document.cookie=\"_ns=2;expires=Sun, 09 Aug 2030 11:53:58 GMT;domain=."+domein+";path=/;\";location.reload();\'>自分のページビューを追跡しないに変更する。</a><br/>");
-   }
-   if(domein.match(/.com$/)){
-      document.write("<a href=\'"+document.URL.replace(".com",".jp")+"\'>"+domein_TLD_nashi+"jpも設定する</a>");
-   }else{
-      document.write("<a href=\'"+document.URL.replace(".jp",".com/ncr")+"\'>"+domein_TLD_nashi+"comも設定する</a>");
-   }
- }else{
-   document.write("cookieが使用できません。");
- }
-//}else{
-// location.href="http://"+domein;
-//}
-
-
+    var myPageView = myPageView || function(){
+        pv = {
+            buttuns:{
+                setCookie: function(year){
+                    document.cookie="_ns=2;expires=Sun, 09 Aug " + year + " 11:53:58 GMT;domain=." + vars.domein + ";path=/;";
+                }
+            },
+            all: function(){
+                if(!navigator.cookieEnabled){
+                  vars.h3Node.textContent = "cookieを有効にしてください。";
+                  vars.elem.appendChild(vars.h3Node);
+                  return;
+                }
+                vars.aNode.href = "#";
+                vars.divNode.style.color = "#cccccc";
+                if(document.cookie.match("_ns=2")){
+                    vars.h3Node.textContent = "この"+vars.domein+"はページビューを追跡していません。"; 
+                    vars.aNode.onclick = function(){myPageView.buttuns.setCookie(2000);return false;}
+                    vars.aNode.textContent = vars.on_msg;
+                    vars.divNode.textContent = vars.off_msg;
+                    vars.childelems = [vars.h3Node, vars.aNode, vars.divNode];
+                } else {
+                    vars.h3Node.textContent = "この"+vars.domein+"はページビューを追跡しています。"; 
+                    vars.aNode.onclick = function(){myPageView.buttuns.setCookie(2030);return false;}
+                    vars.aNode.textContent = vars.off_msg;
+                    vars.divNode.textContent = vars.on_msg;
+                    vars.childelems = [vars.h3Node, vars.divNode, vars.aNode];                    
+                }
+                if (vars.childelems) {
+                    vars.childelems.forEach(function(n){vars.elem.appendChild(n);})
+                }
+            }
+        }  // end of pv
+        var vars ={
+            elem: document.getElementById("myPageView"),
+            h3Node: document.createElement('h3'),
+            domein: location.hostname,
+            aNode: document.createElement("a"),
+            on_msg: "自分のページビューを追跡に変更する。",
+            off_msg: "自分のページビューを追跡しないに変更する。",
+            divNode: document.createElement('div'),
+            childelems: []
+        }
+        return pv;
+    }();
+    myPageView.all();
