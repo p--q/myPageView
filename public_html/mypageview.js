@@ -44,7 +44,9 @@
         function display(elems){  // 要素の配列を引き数にしてidの要素の子要素に追加して表示させる。
             var e = (document.cookie.match("_ns=2"))?trackOff(elems):trackOn(elems);  // _ns=2のcookieがあると追跡していない、ないと追跡している。
             if (e) {
+                e.push(chTLD());  // comとjpを入れ替えるaタグが入ったdiv要素を追加。
                 var elem = e.shift();  // 要素の配列からidの要素を切り出す。
+                elem.textContent = null;  // 子要素をすべて削除する。
                 e.forEach(function(n){elem.appendChild(n);});  // idの要素以外の要素を順番にidの要素の子要素に追加して表示させる。
             }                 
         }
@@ -52,6 +54,18 @@
             document.cookie="_ns=2;expires=Sun, 09 Aug " + year + " 11:53:58 GMT;domain=." + vars.domein + ";path=/;";  // cookieの有効期限を過去にするとcookieが消える。
             display(elems);  // 表示の更新。
         } 
+        function chTLD(){
+            var domein = vars.domein;  // ドメイン。
+            domein = (domein.match(/.com$/))?domein.replace(".com",".jp"):domein.replace(".jp",".com");  // ドメインのcomとjpを入れ替える。
+            var url = document.URL;  // このページのURL。
+            var aNode = createElem("a");  // aタグの要素を作成。
+            aNode.href = (domein.match(/.com$/))?url.replace(".com",".jp"):url.replace(".jp",".com/ncr");  // このページのURLのcomとjpを入れ替えてhrefに設定。
+            aNode.textContent = domein + "も設定する。";
+            var divNodeLink = createElem("div");  // aNodeの親要素となるdivタグの要素を作成。
+            divNodeLink.appendChild(aNode);  // aNodeをdivNodeLinkの要素の子要素にする。
+            divNodeLink.style.paddingTop = "20px";
+            return divNodeLink;
+        }
         return pv;  // グローバルスコープにpvを返す。
     }();
     myPageView.all("myPageView");  // これでmyPageViewモジュールを起動する。引き数はページビュー設定を表示させる要素のid。
