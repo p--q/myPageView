@@ -54,7 +54,7 @@
             document.cookie="_ns=2;expires=Sun, 09 Aug " + year + " 11:53:58 GMT;domain=." + vars.domein + ";path=/;";  // cookieの有効期限を過去にするとcookieが消える。
             display(elems);  // 表示の更新。
         } 
-        function chTLD(){
+        function chTLD(){  // comとjpを入れ替えるaタグが入ったdiv要素を返す。
             var domein = vars.domein;  // ドメイン。
             domein = (domein.match(/.com$/))?domein.replace(".com",".jp"):domein.replace(".jp",".com");  // ドメインのcomとjpを入れ替える。
             var url = document.URL;  // このページのURL。
