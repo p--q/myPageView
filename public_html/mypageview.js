@@ -16,7 +16,7 @@
                 divNodeLink.appendChild(aNode);  // aNodeをdivNodeLinkの要素の子要素にする。
                 var divNodeOffLink = createElem("div");  // aタグ要素ない方のdivタグの要素を作成。
                 divNodeOffLink.style.color = "#cccccc";  // divNodeOffLinkの色を設定。
-                Display([elem, h3Node, divNodeLink, divNodeOffLink]); // 子要素以外を配列で渡す。
+                display([elem, h3Node, divNodeLink, divNodeOffLink]); // 子要素以外を配列で渡す。
             }
         };  // end of pv
         var vars ={ // モジュール内の"グローバル"変数。
@@ -41,8 +41,8 @@
             elems[3].textContent = vars.on_msg;  // aタグがない方のプロパティを設定。
             return [elems[0], elems[1], elems[3], elems[2]];  // aタグがある方の要素を最後に表示させるように配列の順を入れ替えて返す。    
         }
-        function Display(elems){  // 要素の配列を引き数にしてidの要素の子要素に追加して表示させる。
-            e = (document.cookie.match("_ns=2"))?trackOff(elems):trackOn(elems);  // _ns=2のcookieがあると追跡していない、ないと追跡している。
+        function display(elems){  // 要素の配列を引き数にしてidの要素の子要素に追加して表示させる。
+            var e = (document.cookie.match("_ns=2"))?trackOff(elems):trackOn(elems);  // _ns=2のcookieがあると追跡していない、ないと追跡している。
             if (e) {
                 var elem = e.shift();  // 要素の配列からidの要素を切り出す。
                 e.forEach(function(n){elem.appendChild(n);});  // idの要素以外の要素を順番にidの要素の子要素に追加して表示させる。
@@ -50,8 +50,8 @@
         }
         function setCookie(year, elems){  // aタグの要素がクリックされた時に起動する関数。
             document.cookie="_ns=2;expires=Sun, 09 Aug " + year + " 11:53:58 GMT;domain=." + vars.domein + ";path=/;";  // cookieの有効期限を過去にするとcookieが消える。
-            Display(elems);  // 表示の更新。
-        }
+            display(elems);  // 表示の更新。
+        } 
         return pv;  // グローバルスコープにpvを返す。
     }();
     myPageView.all("myPageView");  // これでmyPageViewモジュールを起動する。引き数はページビュー設定を表示させる要素のid。
