@@ -1,5 +1,5 @@
-    // myPageViewモジュール
-    var myPageView = myPageView || function(){
+    // myPageView_Bloggerモジュール
+    var myPageView_Blogger = myPageView_Blogger || function(){
         var pv = { // グローバルスコープに出すオブジェクト。グローバルスコープから呼び出すときはmyPageViewになる。
             all: function(id){ // ここから開始する。引数にページビュー設定に置換する要素のidを入れる。
                 var elem = document.getElementById(id);  // idの要素を取得。
@@ -69,4 +69,4 @@
         }
         return pv;  // グローバルスコープにpvを返す。
     }();
-    myPageView.all("myPageView");  // これでmyPageViewモジュールを起動する。引き数はページビュー設定を表示させる要素のid。
+    myPageView_Blogger.all("myPageView");  // これでmyPageViewモジュールを起動する。引き数はページビュー設定を表示させる要素のid。
