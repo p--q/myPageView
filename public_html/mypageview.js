@@ -2,6 +2,13 @@
     var myPageView_Blogger = myPageView_Blogger || function(){
         var pv = { // グローバルスコープに出すオブジェクト。グローバルスコープから呼び出すときはmyPageView_Bloggerになる。
             all: function(id){ // ここから開始する。引数にページビュー設定に置換する要素のidを入れる。
+                var url = "https://" + vars.domein;  // ブログのトップページのurl。
+                var re = url.slice(0,vars.domein.lastIndexOf(".")+1);  //  ブログのトップページのurlからTLDを除く。
+                var reg = new RegExp(re);  // 正規表現オブジェクトの作成。
+                if (!reg.test(document.referrer)){  // ブログ外から飛んできたときは
+                    location.href=url;  // ブログのトップページを移動する。
+                    return;  // スクリプト終わり。
+                }
                 var elem = document.getElementById(id);  // idの要素を取得。
                 var h3Node = createElem("h3");  // 現在の状態を表示するh3タグの要素を作成。
                 if(!navigator.cookieEnabled){  // cookieが有効でない場合。
@@ -9,21 +16,25 @@
                   elem.appendChild(h3Node);  // idの要素の子要素に追加して表示させる。
                   return;  // スクリプト終わり。
                 }
-                h3Node.style.paddingBottom = "20px";  // h3タグの要素の下部に20px空ける。
-                var aNode = createElem("a");  // aタグの要素を作成。
-                aNode.href = "#";  // aタグの要素のhrefを設定。
-                var divNodeLink = createElem("div");  // aNodeの親要素となるdivタグの要素を作成。
-                divNodeLink.appendChild(aNode);  // aNodeをdivNodeLinkの要素の子要素にする。
-                var divNodeOffLink = createElem("div");  // aタグ要素ない方のdivタグの要素を作成。
-                divNodeOffLink.style.color = "#cccccc";  // divNodeOffLinkの色を設定。
-                display([elem, h3Node, divNodeLink, divNodeOffLink]); // 子要素以外を配列で渡す。
+                var e = createElems(elem, h3Node);  // elemを置換する要素の配列を拾得。
+                display(e); // 子要素以外を配列で渡す。
             }
         };  // end of pv
         var vars ={ // モジュール内の"グローバル"変数。
             domein: location.hostname,  // ブログのドメイン。
             on_msg: "自分のページビューを追跡に変更する\uff61",  // 2行目に表示させるメッセージ。
             off_msg: "自分のページビューを追跡しないに変更する\uff61"  // 3行目に表示させるメッセージ。
-        };     
+        };
+        function createElems(elem, h3Node){  // 要素の配列を返す。
+            h3Node.style.paddingBottom = "20px";  // h3タグの要素の下部に20px空ける。
+            var aNode = createElem("a");  // aタグの要素を作成。
+            aNode.href = "#";  // aタグの要素のhrefを設定。
+            var divNodeLink = createElem("div");  // aNodeの親要素となるdivタグの要素を作成。
+            divNodeLink.appendChild(aNode);  // aNodeをdivNodeLinkの要素の子要素にする。
+            var divNodeOffLink = createElem("div");  // aタグ要素ない方のdivタグの要素を作成。
+            divNodeOffLink.style.color = "#cccccc";  // divNodeOffLinkの色を設定。
+            return [elem, h3Node, divNodeLink, divNodeOffLink];
+        }
         function createElem(tag){  // tagの要素を作成して返す。
             return document.createElement(tag); 
         }
