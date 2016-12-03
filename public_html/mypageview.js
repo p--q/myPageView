@@ -1,6 +1,6 @@
     // myPageView_Bloggerモジュール
     var myPageView_Blogger = myPageView_Blogger || function(){
-        var pv = { // グローバルスコープに出すオブジェクト。グローバルスコープから呼び出すときはmyPageViewになる。
+        var pv = { // グローバルスコープに出すオブジェクト。グローバルスコープから呼び出すときはmyPageView_Bloggerになる。
             all: function(id){ // ここから開始する。引数にページビュー設定に置換する要素のidを入れる。
                 var elem = document.getElementById(id);  // idの要素を取得。
                 var h3Node = createElem("h3");  // 現在の状態を表示するh3タグの要素を作成。
